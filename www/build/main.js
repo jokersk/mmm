@@ -200,59 +200,6 @@ var AddRecordPage = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HistoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_firebase_server_firebase_server__ = __webpack_require__(54);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var HistoryPage = (function () {
-    function HistoryPage(fb, navCtrl, navParams) {
-        this.fb = fb;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.total = 0;
-    }
-    HistoryPage.prototype.ionViewDidLoad = function () {
-    };
-    HistoryPage.prototype.selectDate = function () {
-        var _this = this;
-        this.fb.list(this.date).valueChanges()
-            .subscribe(function (res) {
-            _this.total = 0;
-            res.map(function (r) {
-                _this.total += Number(r.price);
-            });
-            _this.records = res;
-        });
-    };
-    HistoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-history',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/mmmoney/mmmoney/src/pages/history/history.html"*/'\n<ion-header>\n\n  <ion-navbar color="primary">\n      <button ion-button menuToggle>\n          <ion-icon name="menu"></ion-icon>\n        </button>\n    <ion-title>history</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-item>\n      <ion-label floating>日期</ion-label>\n      <ion-datetime displayFormat="MM/DD/YYYY" \n      [(ngModel)]="date"></ion-datetime>\n  </ion-item>\n  \n  <button ion-button (click)="selectDate()" >同朕check下</button>\n  <ion-list>\n    <ion-item *ngFor="let record of records">  \n      <ion-row>\n          <ion-col col-6>{{record.name}}</ion-col>\n          <ion-col col-6>{{record.price}}</ion-col>\n      </ion-row>\n    </ion-item>\n     <ion-item>\n        <ion-row>\n            <ion-col col-6>Total :</ion-col>\n            <ion-col col-6>{{total}}</ion-col>\n        </ion-row>\n     </ion-item>\n  </ion-list>\n  \n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/mmmoney/mmmoney/src/pages/history/history.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_firebase_server_firebase_server__["a" /* FirebaseServerProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
-    ], HistoryPage);
-    return HistoryPage;
-}());
-
-//# sourceMappingURL=history.js.map
-
-/***/ }),
-
-/***/ 138:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
@@ -337,6 +284,60 @@ var ListPage = (function () {
 }());
 
 //# sourceMappingURL=list.js.map
+
+/***/ }),
+
+/***/ 138:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_firebase_server_firebase_server__ = __webpack_require__(54);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var HistoryPage = (function () {
+    function HistoryPage(fb, navCtrl, navParams) {
+        this.fb = fb;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.total = 0;
+    }
+    HistoryPage.prototype.ionViewDidLoad = function () {
+        this.currentUser = this.fb.getCurrentUser();
+    };
+    HistoryPage.prototype.selectDate = function () {
+        var _this = this;
+        this.fb.list(this.date).valueChanges()
+            .subscribe(function (res) {
+            _this.total = 0;
+            _this.records = res.filter(function (res) { return res.uid == _this.currentUser.uid; });
+            _this.records.forEach(function (r) {
+                _this.total += Number(r.price);
+            });
+        });
+    };
+    HistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-history',template:/*ion-inline-start:"/Users/jokersk/Desktop/Developer/mmmoney/mmmoney/src/pages/history/history.html"*/'\n<ion-header>\n\n  <ion-navbar color="primary">\n      <button ion-button menuToggle>\n          <ion-icon name="menu"></ion-icon>\n        </button>\n    <ion-title>history</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-item>\n      <ion-label floating>日期</ion-label>\n      <ion-datetime displayFormat="MM/DD/YYYY" \n      [(ngModel)]="date"></ion-datetime>\n  </ion-item>\n  \n  <button ion-button (click)="selectDate()" >同朕check下</button>\n  <ion-list>\n    <ion-item *ngFor="let record of records">  \n      <ion-row>\n          <ion-col col-6>{{record.name}}</ion-col>\n          <ion-col col-6>{{record.price}}</ion-col>\n      </ion-row>\n    </ion-item>\n     <ion-item>\n        <ion-row>\n            <ion-col col-6>Total :</ion-col>\n            <ion-col col-6>{{total}}</ion-col>\n        </ion-row>\n     </ion-item>\n  </ion-list>\n  \n</ion-content>\n'/*ion-inline-end:"/Users/jokersk/Desktop/Developer/mmmoney/mmmoney/src/pages/history/history.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_firebase_server_firebase_server__["a" /* FirebaseServerProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+    ], HistoryPage);
+    return HistoryPage;
+}());
+
+//# sourceMappingURL=history.js.map
 
 /***/ }),
 
@@ -491,11 +492,11 @@ var map = {
 		4
 	],
 	"../pages/history/history.module": [
-		444,
+		445,
 		3
 	],
 	"../pages/list/list.module": [
-		445,
+		444,
 		2
 	],
 	"../pages/login/login.module": [
@@ -547,8 +548,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(433);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_history_history__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_history_history__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(281);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(284);
@@ -598,8 +599,8 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
                         { loadChildren: '../pages/add-record/add-record.module#AddRecordPageModule', name: 'AddRecordPage', segment: 'add-record', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/history/history.module#HistoryPageModule', name: 'HistoryPage', segment: 'history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/list/list.module#ListPageModule', name: 'ListPage', segment: 'list', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/history/history.module#HistoryPageModule', name: 'HistoryPage', segment: 'history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] }
                     ]
@@ -642,8 +643,8 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(281);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_history_history__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_history_history__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(139);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

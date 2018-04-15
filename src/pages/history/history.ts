@@ -14,12 +14,13 @@ export class HistoryPage {
   date : string;
   records : Record[];
   total:number = 0;
+  currentUser : any;
   constructor(private fb:FirebaseServerProvider,  public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
   ionViewDidLoad() {
-    
+      this.currentUser = this.fb.getCurrentUser()
   }
 
   selectDate(){
@@ -27,10 +28,11 @@ export class HistoryPage {
     .subscribe(
       res => {
         this.total = 0;
-        res.map(r=>{
+        this.records = res.filter(res => res.uid == this.currentUser.uid)
+        
+        this.records.forEach(r=>{
           this.total += Number(r.price)
         })
-        this.records = res;
       }
     )
   
