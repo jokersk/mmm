@@ -1,18 +1,46 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar ion-right color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title></ion-title>
+    <ion-buttons end>
+        <button ion-button ion-right  clear (click)="navToAdd()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+     </ion-buttons> 
+    
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+    <ion-list>
+        <ion-item-sliding *ngFor="let record of recordList$ ">
+          <ion-item>
+              <ion-row>
+                  <ion-col col-4>{{record.date}}</ion-col>
+                  <ion-col col-4>{{record.name}}</ion-col>
+                  <ion-col col-4>{{record.price}}</ion-col>
+              </ion-row>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="primary">
+              <ion-icon name="create"></ion-icon>
+              Details
+            </button>
+            <button ion-button color="danger" (click)="recordRemove(record.key)">
+              <ion-icon name="trash"></ion-icon>
+              Remove
+            </button>
+          </ion-item-options>
+         
+        </ion-item-sliding>
+      </ion-list>
+      <ion-item >
+        Total : {{total}}
+      </ion-item> 
+    
+        
+        
+      
 </ion-content>

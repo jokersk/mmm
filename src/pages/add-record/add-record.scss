@@ -1,0 +1,11 @@
+page-add-record {
+    ion-input{
+        padding-left: 50px;
+    }
+    ion-item.item-input-has-focus,
+    ion-item.item-input-has-value{
+        ion-input{
+            padding-left: 0;
+        }
+    }
+}

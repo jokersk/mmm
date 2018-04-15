@@ -1,37 +1,75 @@
+import { Record } from './../../models/record.model';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FirebaseServerProvider } from '../../providers/firebase-server/firebase-server';
+import { Observable } from 'rxjs/Observable';
 
+
+/**
+ * Generated class for the ListPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
 @Component({
   selector: 'page-list',
-  templateUrl: 'list.html'
+  templateUrl: 'list.html',
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  
+  recordList$ :  Observable<Record[]>;
+  finalData : any = [];
+  total : number = 0;
+  currentUser : any;
+  constructor(private fb:FirebaseServerProvider, 
+    private navCtrl: NavController, private navParams: NavParams) {
+  }
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+  ionViewDidLoad() {
+    this.currentUser = this.fb.getCurrentUser();
+    this.fb.list()
+    .snapshotChanges()
+    .map(
+      change =>{
+        return change.map(c=>({
+           key: c.payload.key, 
+           ...c.payload.val()
+        }))
+      }
+    )
+    .subscribe(res=>{
+      this.total = 0;
+      res.filter(r => r.uid == this.currentUser.uid)
+      .forEach(r => {
+        this.total += Number(r.price)
+        if(this.finalData.find( value => value.date == r.date ) === undefined)
+        {
+          this.finalData.push({ 'date':r.date, 'price': Number(r.price) }) 
+        }else{
+          let temp = this.finalData.find( value => value.date == r.date )
+          temp.price += Number(r.price)
+        }
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
+        this.finalData.map(data=>{
+          if(data.price <= 80) data.color = "cool"
+          else if(data.price <= 150) data.color = "ok"
+          else if(data.price <= 200) data.color = "acceptable"
+          else if(data.price <= 300) data.color = "toomuch"
+          else data.color = "danger"
+        })
+        
+      })
+     
+      
+    })
 
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
-  }
+
+
+
 }

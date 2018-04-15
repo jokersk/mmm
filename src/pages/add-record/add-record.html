@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>添加記錄</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        
+          <ion-item>
+            <ion-label floating>日期</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="record.date"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>買左咩</ion-label>
+            <ion-input type="text" [(ngModel)]="record.name"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label floating>幾錢</ion-label>
+            <ion-input type="text" [(ngModel)]="record.price"></ion-input>
+          </ion-item>
+        
+    </ion-list>
+    <button  ion-button block (click)="addRecord()" >确定</button>
+</ion-content>

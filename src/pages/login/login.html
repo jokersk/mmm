@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>登入</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+        <ion-item>
+          <ion-label floating>你個email</ion-label>
+          <ion-input type="text" [(ngModel)]="account.email"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label floating>密碼</ion-label>
+          <ion-input type="password" [(ngModel)]="account.password"></ion-input>
+        </ion-item>
+    
+      </ion-list>
+    
+      <ion-buttons end>
+          <button ion-button color="secondary" (click)="navigateToPage('RegisterPage')">求account</button>
+        <button ion-button color="primary" (click)="login()" >登入</button>
+      </ion-buttons>
+</ion-content>
